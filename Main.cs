@@ -47,11 +47,8 @@ namespace SuperChargers
                     {
                         ip.OnStateChanged += (s, e) =>
                         {
-                            SendInputMessage(e.pin.Id, e.pin.State);
+                            this.log.Debug("PiFace input pins change");
                         };
-
-                        // Send current state
-                        SendInputMessage(ip.Id, ip.State);
                     }
                 }
                 catch (Exception ex)
@@ -73,7 +70,7 @@ namespace SuperChargers
 
             this.loadedSound = this.fmodSystem.CreateStream(fileName, Mode.Default);
 
-            var channel = this.fmodSystem.PlaySound(this.loadedSound.Value, null, true);
+            var channel = this.fmodSystem.PlaySound(this.loadedSound, null, true);
             string trackName = this.currentTrack;
 
             channel.SetCallback((type, data1, data2) =>
