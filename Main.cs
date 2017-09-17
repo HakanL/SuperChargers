@@ -51,7 +51,7 @@ namespace SuperChargers
 
                             if (e.pin.Id == 0)
                             {
-                                if (e.pin.State && !this.isTriggered)
+                                if (!e.pin.State && !this.isTriggered)
                                 {
                                     // Triggered
                                     this.log.Info("Triggered!");
@@ -117,6 +117,10 @@ namespace SuperChargers
             {
                 this.log.Info("Starting up...");
 
+                this.piFace.OutputPins[2].State = true;
+                this.piFace.OutputPins[3].State = true;
+                this.piFace.UpdatePiFaceOutputPins();
+
                 while (!cancel.IsCancellationRequested)
                 {
                     if (this.piFace != null)
@@ -129,6 +133,8 @@ namespace SuperChargers
                 }
 
                 this.log.Info("Shutting down");
+                this.piFace.OutputPins[2].State = false;
+                this.piFace.UpdatePiFaceOutputPins();
             }
             finally
             {
