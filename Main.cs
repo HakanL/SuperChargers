@@ -71,7 +71,6 @@ namespace SuperChargers
             this.loadedSound = this.fmodSystem.CreateStream(fileName, Mode.Default);
 
             var channel = this.fmodSystem.PlaySound(this.loadedSound, null, true);
-            string trackName = this.currentTrack;
 
             channel.SetCallback((type, data1, data2) =>
             {
@@ -96,6 +95,9 @@ namespace SuperChargers
             try
             {
                 this.log.Info("Starting up...");
+
+                if(!string.IsNullOrEmpty(this.fileToPlay))
+                    PlayTrack(this.fileToPlay);
 
                 var watch = Stopwatch.StartNew();
                 int reportCounter = 0;
