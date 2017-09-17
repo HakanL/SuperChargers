@@ -11,7 +11,6 @@ using SupersonicSound.LowLevel;
 using NLog;
 using SupersonicSound.Exceptions;
 using System.Diagnostics;
-using Newtonsoft.Json;
 using System.IO.Ports;
 
 namespace SuperChargers
