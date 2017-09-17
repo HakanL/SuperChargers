@@ -22,6 +22,7 @@ namespace SuperChargers
         private SupersonicSound.LowLevel.LowLevelSystem fmodSystem;
         private Sound loadedSound;
         private string fileToPlay;
+        private bool isTriggered;
 
         public Main(Arguments args)
         {
@@ -46,7 +47,23 @@ namespace SuperChargers
                     {
                         ip.OnStateChanged += (s, e) =>
                         {
-                            this.log.Debug("PiFace input pins change");
+                            this.log.Debug("PiFace input pins change, pin {0} state {1}", e.pin.Id, e.pin.State);
+
+                            if (e.pin.Id == 0)
+                            {
+                                if (e.pin.State && !this.isTriggered)
+                                {
+                                    // Triggered
+                                    this.log.Info("Triggered!");
+                                    this.isTriggered = true;
+
+                                    this.piFace.OutputPins[0].State = true;
+                                }
+
+                                this.piFace.OutputPins[3].State = e.pin.State;
+
+                                this.piFace.UpdatePiFaceOutputPins();
+                            }
                         };
                     }
                 }
@@ -76,6 +93,9 @@ namespace SuperChargers
                 if (type == ChannelControlCallbackType.End)
                 {
                     this.log.Debug("Audio file ended");
+                    this.piFace.OutputPins[0].State = false;
+                    this.piFace.UpdatePiFaceOutputPins();
+                    this.isTriggered = false;
                 }
             });
 
