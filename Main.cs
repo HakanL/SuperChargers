@@ -133,7 +133,9 @@ namespace SuperChargers
                 }
 
                 this.log.Info("Shutting down");
+                this.piFace.OutputPins[0].State = false;
                 this.piFace.OutputPins[2].State = false;
+                this.piFace.OutputPins[3].State = false;
                 this.piFace.UpdatePiFaceOutputPins();
             }
             finally
