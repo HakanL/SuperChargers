@@ -58,6 +58,8 @@ namespace SuperChargers
                                     this.isTriggered = true;
 
                                     this.piFace.OutputPins[0].State = true;
+                                    if(!string.IsNullOrEmpty(this.fileToPlay))
+                                        PlayTrack(this.fileToPlay);
                                 }
 
                                 this.piFace.OutputPins[3].State = e.pin.State;
@@ -114,9 +116,6 @@ namespace SuperChargers
             try
             {
                 this.log.Info("Starting up...");
-
-                if(!string.IsNullOrEmpty(this.fileToPlay))
-                    PlayTrack(this.fileToPlay);
 
                 while (!cancel.IsCancellationRequested)
                 {
