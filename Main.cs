@@ -99,8 +99,6 @@ namespace SuperChargers
                 if(!string.IsNullOrEmpty(this.fileToPlay))
                     PlayTrack(this.fileToPlay);
 
-                var watch = Stopwatch.StartNew();
-                int reportCounter = 0;
                 while (!cancel.IsCancellationRequested)
                 {
                     if (this.piFace != null)
